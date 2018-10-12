@@ -5,7 +5,8 @@ class Satoshi::Cli
     self.menu
   end
 
-  def menu
+  def self.menu
+    Satoshi::Scraper.scrape_top_100_coins
     #list top 100 coins and current price
     #get input 1-10 and prompt user
     #list top 10 coins 1-10 to view info

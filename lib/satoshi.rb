@@ -8,3 +8,4 @@ module Satoshi
 end
 
 require_relative "satoshi/cli"
+require_relative "satoshi/scraper"
