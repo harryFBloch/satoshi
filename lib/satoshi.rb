@@ -9,3 +9,4 @@ end
 
 require_relative "satoshi/cli"
 require_relative "satoshi/scraper"
+require_relative "satoshi/coin"

@@ -8,7 +8,7 @@ class Satoshi::Scraper
          link = coin_container.css("a.currency-name-container").attr("href").value
          price = coin_container.css("a.price").attr("data-usd").value.strip
          #puts "#{index + 1}. #{name}-$#{price}"
-         coin_hash = {:name => name, :usd_price => price,:index => index + 1 , :link => link}
+         coin_hash = {:name => name, :usd_price => price,:index => index + 1 , :info_link => link}
        }
   end
 
