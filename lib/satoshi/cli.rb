@@ -26,6 +26,11 @@ class Satoshi::Cli
       puts "-------------------------"
       input = gets.chomp
       return self.exit if input == "exit"
+      coin = Satoshi::Coin.find_by_name(input)
+      if coin
+        coin.load_info(Satoshi::Scraper.scrape_info_page(coin.info_link))
+        return nil
+      end
       input = input.to_i
       if input > 0 && input < 11
           input -= 1
@@ -35,10 +40,9 @@ class Satoshi::Cli
           self.selectable_array = coins_to_print
           puts "-------------------------"
           coins_to_print.each {|coin| puts"#{coin.index}. #{coin.name} $#{coin.usd_price}"}
-          puts "-------------------------" 
+          puts "-------------------------"
           self.get_info_for_coin
       else
-        binding.pry
         puts "Invalid argument, please try again"
         self.first_prompt_for_coins
       end
