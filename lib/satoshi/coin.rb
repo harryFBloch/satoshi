@@ -13,9 +13,32 @@ class Satoshi::Coin
     coin.index = index
     coin.usd_price = price
     coin.save
+    self.sort_all_by_index
+  end
+
+  def self.sort_all_by_index
+    self.all.sort_by { |coin| coin.index}
   end
 
   def self.all
     @@all
   end
+
+  def load_info(info_hash)
+    info_hash.each {|key, value|
+        self.send("#{key}=",value)
+     }
+     display_info
+  end
+
+  def display_info
+      puts "#{self.name} - $#{self.usd_price}"
+      puts "Price In btc - #{self.btc_price}"
+      puts "24hr Percent Change - #{self.percent_change}"
+      puts "Market Cap - $#{self.usd_market_cap} - #{self.btc_market_cap} btc"
+      puts "24hr Volume - $#{self.volume_usd_24hr} - #{self.volume_btc_24hr} btc"
+      puts "Circulating Supply - #{self.circulating_supply_btc}"
+      puts "Max Supply - #{self.max_supply}"
+  end
+
 end

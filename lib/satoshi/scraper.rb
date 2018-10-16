@@ -34,5 +34,8 @@ class Satoshi::Scraper
         info_hash[:max_supply] = coin_container.css("div.coin-summary-item-detail span").text.strip
       end
     }
+    info_hash
   end
+
+
 end
