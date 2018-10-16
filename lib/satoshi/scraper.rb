@@ -17,6 +17,7 @@ class Satoshi::Scraper
     info_hash = {}
     info_hash[:percent_change] = doc.css(".details-panel-item--price .h2 span").text
     info_hash[:btc_price] = doc.css(".details-panel-item--price .text-gray span").text.strip
+    info_hash[:ticker] = doc.css("span.h3").text.gsub("(","").gsub(")","")
     market_cap_array = doc.css("div.coin-summary-item")
 
     market_cap_array.each {|coin_container|
@@ -35,6 +36,15 @@ class Satoshi::Scraper
       end
     }
     info_hash
+  end
+
+  def self.scrape_news_for_coin_url(url)
+      doc = Nokogiri::HTML(open(COIN_MARKET_CAP_URL + url + "/#social"))
+      binding.pry
+      twitter = doc.css("div#social .col-sm-6")[0].css(".twitter-timeline").attr("href").value
+      rediit = doc.css("div#social .col-sm-6")[1].css(".reddit-timeline")
+
+
   end
 
 

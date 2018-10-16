@@ -1,13 +1,14 @@
 class Satoshi::Cli
 @@selectable_array = []
   def self.run
-    puts "Welcome to Satoshi! Here are the top 100 Coins:"
+    puts "Welcome to Satoshi! Here you can find info on the top 100 Coins:"
     self.menu
   end
 
   def self.menu
     self.create_coins(coin_array = Satoshi::Scraper.scrape_top_100_coins)
     self.first_prompt_for_coins
+    #Satoshi::Scraper.scrape_news_for_coin_url("currencies/ripple/")
     #list top 100 coins and current price
     #get input 1-10 and prompt user
     #list top 10 coins 1-10 to view info
@@ -31,7 +32,7 @@ class Satoshi::Cli
       #binding.pry
       if coin
         coin.load_info(Satoshi::Scraper.scrape_info_page(coin.info_link))
-        self.first_prompt_for_coins
+        self.info_menu(coin)
       end
       input = input.to_i unless input == "exit"
       if input > 0 && input < 11
@@ -59,10 +60,65 @@ class Satoshi::Cli
     if input <= 10 && input > 0
       coin = self.selectable_array[input - 1]
       coin.load_info(Satoshi::Scraper.scrape_info_page(coin.info_link))
-      self.menu
+      self.info_menu(coin)
     else
       puts "Invalid argument please try again!"
       self.get_info_for_coin
+    end
+  end
+
+  def self.info_menu(coin)
+    puts "-------------------------"
+    puts "You are looking at #{coin.name}"
+    puts "Enter graph ,social, search, or exit:"
+    input = gets.chomp
+    case input
+    when "graph"
+      type = self.graph_type_from_coin(coin)
+      timespan = self.graph_timeframe_from_coin(coin)
+      Satoshi::Graph.createGraphForCoin(coin.ticker, type, timespan)
+      slef.info_menu(coin)
+    when "social"
+    when "search"
+      self.first_prompt_for_coins
+    when "exit"
+      self.exit
+    else
+      puts  "Invalid argument please try again!"
+      self.info_menu
+    end
+
+  end
+
+  def self.graph_type_from_coin(coin)
+    puts "Would You Like to see a (c)candlestick or (l)line graph?"
+    input_type = gets.chomp
+    type = ""
+    case input_type
+    when "c"
+      type = "candlestick"
+    when "l"
+      type = "dark"
+    when "exit"
+      self.exit
+    else
+        puts  "Invalid argument please try again!"
+        self.graph_coin(coin)
+    end
+    type
+  end
+
+  def self.graph_timeframe_from_coin(coin)
+    puts "What time span would you like the graph to be?"
+    puts "Enter: 1y, 30d, 7d, or 24h"
+    timespan = gets.chomp
+    if timespan == "1y" || timespan == "30d" || timespan == "7d" || timespan == "24h"
+      timespan
+    elsif timespan == "exit"
+      self.exit
+    else
+      puts  "Invalid argument please try again!"
+      self.graph_timeframe_from_coin(coin)
     end
   end
 

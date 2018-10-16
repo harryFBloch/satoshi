@@ -1,5 +1,5 @@
 class Satoshi::Coin
-  attr_accessor :percent_change, :btc_price, :usd_market_cap, :btc_market_cap, :volume_usd_24hr, :volume_btc_24hr, :circulating_supply_btc, :max_supply, :info_link, :usd_price, :index, :name
+  attr_accessor :percent_change, :btc_price, :usd_market_cap, :btc_market_cap, :volume_usd_24hr, :ticker, :volume_btc_24hr, :circulating_supply_btc, :max_supply, :info_link, :usd_price, :index, :name
   @@all = []
 
   def save
@@ -35,6 +35,7 @@ class Satoshi::Coin
       puts "-------------------------"
       puts "#{self.name} = $#{self.usd_price}"
       puts "Price In btc = #{self.btc_price}"
+      puts "Ticker = #{self.ticker}"
       puts "24hr Percent Change = #{self.percent_change}%"
       puts "Market Cap = $#{self.usd_market_cap} = #{self.btc_market_cap} btc"
       puts "24hr Volume = $#{self.volume_usd_24hr} = #{self.volume_btc_24hr} btc"
