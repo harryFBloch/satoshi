@@ -32,6 +32,7 @@ class Satoshi::Coin
   end
 
   def display_info
+      puts "-------------------------"
       puts "#{self.name} = $#{self.usd_price}"
       puts "Price In btc = #{self.btc_price}"
       puts "24hr Percent Change = #{(self.percent_change.to_f * 100).to_i}%"
@@ -39,6 +40,7 @@ class Satoshi::Coin
       puts "24hr Volume = $#{self.volume_usd_24hr} = #{self.volume_btc_24hr} btc"
       puts "Circulating Supply = #{self.circulating_supply_btc}"
       puts "Max Supply = #{self.max_supply}" if self.max_supply
+      puts "-------------------------"
   end
 
 end

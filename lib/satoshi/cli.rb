@@ -21,17 +21,24 @@ class Satoshi::Cli
   end
 
   def self.first_prompt_for_coins
+      puts "-------------------------"
       puts "enter 1-10 to view the top coins 1 = 1-10 , 2 = 11-20, 3 = 21-30...."
-      input = gets.chomp.to_i
+      puts "-------------------------"
+      input = gets.chomp
+      return self.exit if input == "exit"
+      input = input.to_i
       if input > 0 && input < 11
           input -= 1
           lower_range = input * 10
           higher_range = lower_range + 10
           coins_to_print = Satoshi::Coin.all[lower_range...higher_range]
           self.selectable_array = coins_to_print
+          puts "-------------------------"
           coins_to_print.each {|coin| puts"#{coin.index}. #{coin.name} $#{coin.usd_price}"}
+          puts "-------------------------" 
           self.get_info_for_coin
       else
+        binding.pry
         puts "Invalid argument, please try again"
         self.first_prompt_for_coins
       end
@@ -39,12 +46,12 @@ class Satoshi::Cli
 
   def self.get_info_for_coin
     puts "Enter 1-10 to view coin info"
-    input = gets.chomp.to_i
+    input = gets.chomp
+    return self.exit if input == "exit"
+    input = input.to_i
     if input <= 10 && input > 0
       coin = self.selectable_array[input - 1]
       coin.load_info(Satoshi::Scraper.scrape_info_page(coin.info_link))
-    elsif input.to_s == "exit"
-      self.exit
     else
       self.get_info_for_coin
     end
@@ -56,6 +63,10 @@ class Satoshi::Cli
 
   def self.selectable_array
     @@selectable_array
+  end
+
+  def self.exit
+    puts "GoodBye"
   end
 
 end
