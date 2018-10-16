@@ -8,7 +8,6 @@ class Satoshi::Cli
   def self.menu
     self.create_coins(coin_array = Satoshi::Scraper.scrape_top_100_coins)
     self.first_prompt_for_coins
-    Satoshi::Scraper.scrape_info_page("/currencies/bitcoin")
     #list top 100 coins and current price
     #get input 1-10 and prompt user
     #list top 10 coins 1-10 to view info
@@ -23,15 +22,18 @@ class Satoshi::Cli
   def self.first_prompt_for_coins
       puts "-------------------------"
       puts "enter 1-10 to view the top coins 1 = 1-10 , 2 = 11-20, 3 = 21-30...."
+      puts "or enter the name of the coin you wish to view"
       puts "-------------------------"
       input = gets.chomp
-      return self.exit if input == "exit"
+      #binding.pry
+      self.exit if input == "exit"
       coin = Satoshi::Coin.find_by_name(input)
+      #binding.pry
       if coin
         coin.load_info(Satoshi::Scraper.scrape_info_page(coin.info_link))
-        return nil
+        self.first_prompt_for_coins
       end
-      input = input.to_i
+      input = input.to_i unless input == "exit"
       if input > 0 && input < 11
           input -= 1
           lower_range = input * 10
@@ -43,7 +45,8 @@ class Satoshi::Cli
           puts "-------------------------"
           self.get_info_for_coin
       else
-        puts "Invalid argument, please try again"
+        #binding.pry
+        puts "Invalid argument, please try again!"
         self.first_prompt_for_coins
       end
   end
@@ -56,7 +59,9 @@ class Satoshi::Cli
     if input <= 10 && input > 0
       coin = self.selectable_array[input - 1]
       coin.load_info(Satoshi::Scraper.scrape_info_page(coin.info_link))
+      self.menu
     else
+      puts "Invalid argument please try again!"
       self.get_info_for_coin
     end
   end
@@ -70,7 +75,8 @@ class Satoshi::Cli
   end
 
   def self.exit
-    puts "GoodBye"
+    puts "-------------------------"
+    abort("Goodbye")
   end
 
 end

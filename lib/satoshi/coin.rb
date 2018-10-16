@@ -35,7 +35,7 @@ class Satoshi::Coin
       puts "-------------------------"
       puts "#{self.name} = $#{self.usd_price}"
       puts "Price In btc = #{self.btc_price}"
-      puts "24hr Percent Change = #{(self.percent_change.to_f * 100).to_i}%"
+      puts "24hr Percent Change = #{self.percent_change}%"
       puts "Market Cap = $#{self.usd_market_cap} = #{self.btc_market_cap} btc"
       puts "24hr Volume = $#{self.volume_usd_24hr} = #{self.volume_btc_24hr} btc"
       puts "Circulating Supply = #{self.circulating_supply_btc}"
