@@ -43,8 +43,11 @@ class Satoshi::Scraper
       binding.pry
       twitter = doc.css("div#social .col-sm-6")[0].css(".twitter-timeline").attr("href").value
       rediit = doc.css("div#social .col-sm-6")[1].css(".reddit-timeline")
+  end
 
-
+  def self.scrape_new_price_for_coin(url)
+      doc = Nokogiri::HTML(open(COIN_MARKET_CAP_URL + url))
+      doc.css(".details-panel-item--price__value").text.to_f
   end
 
 

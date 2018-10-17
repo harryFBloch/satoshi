@@ -70,7 +70,7 @@ class Satoshi::Cli
   def self.info_menu(coin)
     puts "-------------------------"
     puts "You are looking at #{coin.name}"
-    puts "Enter graph ,social, search, or exit:"
+    puts "Enter graph ,social, search, ticker, or exit:"
     input = gets.chomp
     case input
     when "graph"
@@ -79,13 +79,16 @@ class Satoshi::Cli
       Satoshi::Graph.createGraphForCoin(coin.ticker, type, timespan)
       self.info_menu(coin)
     when "social"
+
+    when "ticker"
+      Satoshi::Ticker.ticker_for_coin(coin)
     when "search"
       self.first_prompt_for_coins
     when "exit"
       self.exit
     else
       puts  "Invalid argument please try again!"
-      self.info_menu
+      self.info_menu(coin)
     end
 
   end
