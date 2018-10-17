@@ -77,7 +77,7 @@ class Satoshi::Cli
       type = self.graph_type_from_coin(coin)
       timespan = self.graph_timeframe_from_coin(coin)
       Satoshi::Graph.createGraphForCoin(coin.ticker, type, timespan)
-      slef.info_menu(coin)
+      self.info_menu(coin)
     when "social"
     when "search"
       self.first_prompt_for_coins
