@@ -1,5 +1,7 @@
 class Satoshi::Cli
+
 @@selectable_array = []
+
   def self.run
     puts "Welcome to Satoshi! Here you can find info on the top 100 Coins:"
     self.menu
@@ -8,12 +10,6 @@ class Satoshi::Cli
   def self.menu
     self.create_coins(coin_array = Satoshi::Scraper.scrape_top_100_coins)
     self.first_prompt_for_coins
-    #Satoshi::Scraper.scrape_news_for_coin_url("currencies/ripple/")
-    #list top 100 coins and current price
-    #get input 1-10 and prompt user
-    #list top 10 coins 1-10 to view info
-    #get info from coins page
-    #repeat program or exit maybe add refresh method
   end
 
   def self.create_coins(coin_array)
@@ -47,7 +43,7 @@ class Satoshi::Cli
           self.get_info_for_coin
       else
         #binding.pry
-        puts "Invalid argument, please try again!"
+        puts "Invalid argument, please try again!".red
         self.first_prompt_for_coins
       end
   end
@@ -62,7 +58,7 @@ class Satoshi::Cli
       coin.load_info(Satoshi::Scraper.scrape_info_page(coin.info_link))
       self.info_menu(coin)
     else
-      puts "Invalid argument please try again!"
+      puts "Invalid argument please try again!".red
       self.get_info_for_coin
     end
   end
@@ -70,7 +66,7 @@ class Satoshi::Cli
   def self.info_menu(coin)
     puts "-------------------------"
     puts "You are looking at #{coin.name}"
-    puts "Enter graph ,social, search, ticker, or exit:"
+    puts "Enter graph ,social, search, ticker, add, delete, or exit:"
     input = gets.chomp
     case input
     when "graph"
@@ -81,13 +77,22 @@ class Satoshi::Cli
     when "social"
 
     when "ticker"
-      Satoshi::Ticker.ticker_for_coin(coin)
+      Satoshi::Ticker.coin_array << coin unless Satoshi::Ticker.coin_array.find {|fcoin| fcoin == coin}
+      Satoshi::Ticker.ticker_for_coin_array(coin)
+    when "add"
+      Satoshi::Ticker.coin_array << coin unless Satoshi::Ticker.coin_array.find {|fcoin| fcoin == coin}
+      puts "coin has been added to ticker..You can add multiple coins to the ticker!".green
+      self.info_menu(coin)
+    when "delete"
+      Satoshi::Ticker.coin_array.delete_if {|dcoin| dcoin == coin}
+      puts "coin has been removed from ticker".red
+      self.info_menu(coin)
     when "search"
       self.first_prompt_for_coins
     when "exit"
       self.exit
     else
-      puts  "Invalid argument please try again!"
+      puts  "Invalid argument please try again!".red
       self.info_menu(coin)
     end
 
@@ -105,7 +110,7 @@ class Satoshi::Cli
     when "exit"
       self.exit
     else
-        puts  "Invalid argument please try again!"
+        puts  "Invalid argument please try again!".red
         self.graph_coin(coin)
     end
     type
@@ -120,7 +125,7 @@ class Satoshi::Cli
     elsif timespan == "exit"
       self.exit
     else
-      puts  "Invalid argument please try again!"
+      puts  "Invalid argument please try again!".red
       self.graph_timeframe_from_coin(coin)
     end
   end

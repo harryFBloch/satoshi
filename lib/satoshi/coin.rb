@@ -1,5 +1,5 @@
 class Satoshi::Coin
-  attr_accessor :percent_change, :btc_price, :usd_market_cap, :btc_market_cap, :volume_usd_24hr, :ticker, :volume_btc_24hr, :circulating_supply_btc, :max_supply, :info_link, :usd_price, :index, :name
+  attr_accessor :percent_change, :btc_price, :usd_market_cap, :btc_market_cap, :volume_usd_24hr, :ticker, :volume_btc_24hr, :circulating_supply_btc, :max_supply, :info_link, :usd_price, :index, :name, :last_price
   @@all = []
 
   def save
@@ -12,6 +12,7 @@ class Satoshi::Coin
     coin.info_link = link
     coin.index = index
     coin.usd_price = price
+    coin.last_price = price.to_f
     coin.save
     self.sort_all_by_index
   end
