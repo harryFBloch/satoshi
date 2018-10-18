@@ -2,6 +2,8 @@ PATH
   remote: .
   specs:
     satoshi (0.1.0)
+      catpix
+      nokogiri
 
 GEM
   remote: https://rubygems.org/
@@ -38,22 +40,16 @@ GEM
     rspec-support (3.8.0)
     ruby-terminfo (0.1.1)
     tco (0.1.8)
-    timeout (0.0.1)
-      timeout-extensions
-    timeout-extensions (0.1.1)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   bundler (~> 1.16)
-  catpix
-  nokogiri
   pry
   rake (~> 10.0)
   rspec (~> 3.0)
   satoshi!
-  timeout
 
 BUNDLED WITH
    1.16.6
