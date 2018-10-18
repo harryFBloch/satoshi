@@ -66,7 +66,7 @@ class Satoshi::Cli
   def self.info_menu(coin)
     puts "-------------------------"
     puts "You are looking at #{coin.name}"
-    puts "Enter graph ,social, search, ticker, add, delete, or exit:"
+    puts "Enter graph , search, ticker, delete, or exit:"
     input = gets.chomp
     case input
     when "graph"
@@ -74,8 +74,6 @@ class Satoshi::Cli
       timespan = self.graph_timeframe_from_coin(coin)
       Satoshi::Graph.createGraphForCoin(coin.ticker, type, timespan)
       self.info_menu(coin)
-    when "social"
-
     when "ticker"
       Satoshi::Ticker.coin_array << coin unless Satoshi::Ticker.coin_array.find {|fcoin| fcoin == coin}
       Satoshi::Ticker.ticker_for_coin_array(coin)
@@ -95,7 +93,6 @@ class Satoshi::Cli
       puts  "Invalid argument please try again!".red
       self.info_menu(coin)
     end
-
   end
 
   def self.graph_type_from_coin(coin)
