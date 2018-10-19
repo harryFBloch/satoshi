@@ -4,6 +4,14 @@ Welcome to your new gem! In this directory, you'll find the files you need to be
 
 TODO: Delete this and the text above, and describe your gem
 
+##requirements
+
+If you dont have image magic run these commands
+
+brew install imagemagick@6
+brew link --force imagemagick@6
+gem install rmagick
+
 ## Installation
 
 Add this line to your application's Gemfile:

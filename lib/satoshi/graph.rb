@@ -3,7 +3,7 @@ class Satoshi::Graph
   def self.createGraphForCoin(ticker, type , timeframe)
   ticker = "iota" if ticker == "MIOTA"
   url = "https://cryptohistory.org/charts/#{type}/#{ticker.downcase}-usd/#{timeframe}/png"
-  path = './lib/satoshi/graph.png'
+  path = "#{__dir__}/graph.png"
 
   begin
   File.write path, open(url).read
