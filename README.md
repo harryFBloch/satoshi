@@ -1,3 +1,7 @@
+demo video = https://www.youtube.com/watch?v=HPUCiaSr_XY&t=3s
+
+blog post = https://harryfbloch.github.io/satoshi_gem
+
 # Satoshi
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/satoshi`. To experiment with that code, run `bin/console` for an interactive prompt.
